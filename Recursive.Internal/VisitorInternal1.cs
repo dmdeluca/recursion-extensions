@@ -2,11 +2,11 @@
 
 namespace Recursion.Internal
 {
-    public sealed class VisitorInternal<TSource, TResult>
+    public sealed class RecursiveFunc<TSource, TResult>
     {
         private readonly Func<TSource, TResult> _recurse = null;
 
-        public VisitorInternal(Func<TSource, Func<TSource, TResult>, TResult> function)
+        public RecursiveFunc(Func<TSource, Func<TSource, TResult>, TResult> function)
         {
             if (function is null)
             {
@@ -16,7 +16,7 @@ namespace Recursion.Internal
             _recurse = a => function(a, _recurse);
         }
 
-        public TResult Visit(TSource source)
+        public TResult Apply(TSource source)
         {
             if (source is null)
             {

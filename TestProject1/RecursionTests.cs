@@ -7,11 +7,6 @@ using Xunit;
 
 namespace Recursion.Tests
 {
-    public class Recursive<T>
-    {
-
-    }
-
     public class RecursionTests
     {
         private static readonly TreeNode _tree = new()
@@ -30,14 +25,13 @@ namespace Recursion.Tests
             }
         };
 
+        [Fact]
         public void RecursiveDeclaration()
         {
-            var fact = new VisitorInternal<int, int>((x, recurse) =>
-            {
-                if (x == 0)
-                    return 1;
-                return x * recurse(x - 1);
-            });
+            var factorial = new RecursiveFunc<int, int>(
+                (x, fact) => x == 0 ? 1 : x * fact(x - 1));
+
+            Assert.Equal(120, factorial.Apply(5));
         }
 
         [Fact]
@@ -45,7 +39,7 @@ namespace Recursion.Tests
         {
             var sb = new StringBuilder();
 
-            var visitor = new VisitorInternal<TreeNode>((node, recurse) =>
+            var function = new RecursiveFunc<TreeNode>((node, recurse) =>
             {
                 // define the recursive action
                 sb.Append(node.Name).Append(' ');
@@ -53,7 +47,7 @@ namespace Recursion.Tests
                     recurse(child);
             });
 
-            visitor.Visit(_tree);
+            function.Apply(_tree);
 
             Assert.Equal("ted barbie bobbu", sb.ToString().Trim());
         }
@@ -61,13 +55,13 @@ namespace Recursion.Tests
         [Fact]
         public void Test2()
         {
-            var visitor = new VisitorInternal<TreeNode, IntNode>((node, recurse) => new IntNode
+            var transform = new RecursiveFunc<TreeNode, IntNode>((node, recurse) => new IntNode
             {
                 Data = node.Name.Length,
                 Children = node.Children.Select(recurse).ToList()
             });
 
-            var intNodes = visitor.Visit(_tree);
+            var intNodes = transform.Apply(_tree);
 
             Assert.Equal(3, intNodes.Data);
             Assert.Equal(6, intNodes.Children[0].Data);

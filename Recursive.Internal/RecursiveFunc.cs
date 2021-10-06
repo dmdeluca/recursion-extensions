@@ -5,11 +5,11 @@ using System.Runtime.CompilerServices;
 
 namespace Recursion.Internal
 {
-    public sealed class VisitorInternal<TSource> 
+    public sealed class RecursiveFunc<TSource> 
     {
         private readonly Action<TSource> _recurse = null;
 
-        public VisitorInternal(Action<TSource, Action<TSource>> action)
+        public RecursiveFunc(Action<TSource, Action<TSource>> action)
         {
             if (action is null)
             {
@@ -19,7 +19,7 @@ namespace Recursion.Internal
             _recurse = (a) => action(a, _recurse);
         }
 
-        public void Visit(TSource source)
+        public void Apply(TSource source)
         {
             if (source is null)
             {
