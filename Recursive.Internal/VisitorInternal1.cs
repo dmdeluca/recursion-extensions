@@ -2,28 +2,18 @@
 
 namespace Recursion.Internal
 {
-    public sealed class RecursiveFunc<TSource, TResult>
+    public static class RecursiveFunction
     {
-        private readonly Func<TSource, TResult> _recurse = null;
-
-        public RecursiveFunc(Func<TSource, Func<TSource, TResult>, TResult> function)
+        public static Func<TSource,TResult> Create<TSource, TResult>(Func<TSource, Func<TSource, TResult>, TResult> function)
         {
-            if (function is null)
-            {
-                throw new ArgumentNullException(nameof(function));
-            }
-
-            _recurse = a => function(a, _recurse);
+            TResult recurse(TSource a) => function(a, recurse);
+            return recurse;
         }
 
-        public TResult Apply(TSource source)
+        public static Action<TSource> Create<TSource>(Action<TSource, Action<TSource>> action)
         {
-            if (source is null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
-            return _recurse(source);
+            void recurse(TSource a) => action(a, recurse);
+            return recurse;
         }
     }
 }
