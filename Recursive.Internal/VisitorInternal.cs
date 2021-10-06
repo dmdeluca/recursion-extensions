@@ -5,11 +5,11 @@ using System.Runtime.CompilerServices;
 
 namespace Recursion.Internal
 {
-    internal sealed class Visitor<TSource> : IVisitor<TSource>
+    public sealed class VisitorInternal<TSource> 
     {
         private readonly Action<TSource> _recurse = null;
 
-        public Visitor(Action<TSource, Action<TSource>> action)
+        public VisitorInternal(Action<TSource, Action<TSource>> action)
         {
             if (action is null)
             {

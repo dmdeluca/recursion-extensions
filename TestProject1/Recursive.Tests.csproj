@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Recursive.Internal\Recursive.Internal.csproj" />
+    <ProjectReference Include="..\Recursive.Internal\Recursive.csproj" />
   </ItemGroup>
 
 </Project>

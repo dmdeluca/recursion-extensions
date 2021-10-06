@@ -12,4 +12,9 @@
         /// <param name="source"></param>
         void Visit(TSource source);
     }
+
+    public static class Visitor
+    {
+        public IVisitor<TSource> Create<TSource>
+    }
 }

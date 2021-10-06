@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,11 @@ using Xunit;
 
 namespace Recursion.Tests
 {
+    public class Recursive<T>
+    {
+
+    }
+
     public class RecursionTests
     {
         private static readonly TreeNode _tree = new()
@@ -24,12 +30,22 @@ namespace Recursion.Tests
             }
         };
 
+        public void RecursiveDeclaration()
+        {
+            var fact = new VisitorInternal<int, int>((x, recurse) =>
+            {
+                if (x == 0)
+                    return 1;
+                return x * recurse(x - 1);
+            });
+        }
+
         [Fact]
         public void Test1()
         {
             var sb = new StringBuilder();
 
-            var visitor = new Visitor<TreeNode>((node, recurse) =>
+            var visitor = new VisitorInternal<TreeNode>((node, recurse) =>
             {
                 // define the recursive action
                 sb.Append(node.Name).Append(' ');
@@ -45,7 +61,7 @@ namespace Recursion.Tests
         [Fact]
         public void Test2()
         {
-            var visitor = new Visitor<TreeNode, IntNode>((node, recurse) => new IntNode
+            var visitor = new VisitorInternal<TreeNode, IntNode>((node, recurse) => new IntNode
             {
                 Data = node.Name.Length,
                 Children = node.Children.Select(recurse).ToList()
