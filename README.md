@@ -16,6 +16,7 @@ var factorial = RecursiveFunction.Create<int, int>((x, fact) => x == 0 ? 1 : x *
 
 ```csharp
 
+// Supposing you have a class that needs to be traversed by a visitor
 class TreeNode
 {
     public string Name { get; set; }
@@ -24,7 +25,8 @@ class TreeNode
 
 // ...
 
-var allJeffVisitor = RecursiveFunction.Create<TreeNode, bool>((node, recurse) =>
+// You can create a recursive visitor as follows.
+var allJeff = RecursiveFunction.Create<TreeNode, bool>((node, recurse) =>
 {
     return node.Name.Equals("jeff") && node.Children.All(recurse);
 });
@@ -39,5 +41,5 @@ var nodes = new TreeNode
     }
 };
 
-Assert.True(allJeffVisitor(nodes));
+Assert.True(allJeff(nodes));
 ```
