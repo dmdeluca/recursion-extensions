@@ -1,5 +1,5 @@
 # recursion-extensions
-Extensions for creating simple recursive visitors.
+These are extensions for creating simple recursive visitors. Mainly a for-fun project.
 
 I created this because it allows the developer to create a recursive anonymous function in one line instead of two.
 
